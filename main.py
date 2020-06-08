@@ -9,6 +9,7 @@ def mine_cross_reference_issues(pr_ids):
             if event['event'] == 'cross-referenced':
                 cross_referenced_issue.append(id)
                 print(cross_referenced_issue)
+                print(event['source']['issue']['html_url'])
                 return
 
 
@@ -43,7 +44,7 @@ if __name__ == "__main__":
     pr_ids = [pr['number'] for pr in res]
     # print(pr_ids)
     mine_cross_reference_issues(pr_ids)
-    get_source_of_cross_reference("nodejs/node", 33773)
+    # get_source_of_cross_reference("nodejs/node", 33773)
 
     #query repo
     # res = api.get_repo("Jupyter%20Notebook","2008-01-01","2009-01-01")
