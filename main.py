@@ -1,19 +1,20 @@
 from github_api import GitHubAPI
 
 
-def mine_cross_reference_issues(pr_ids):
+def mine_cross_reference_pr_issues(repo, pr_ids):
     cross_referenced_issue = []
     for id in pr_ids:
-        issue_events = api.get_issue_pr_timeline("nodejs/node", id)
+        issue_events = api.get_issue_pr_timeline(repo, id)
         for event in issue_events:
-            if event['event'] == 'cross-referenced':
+            if event['event'] == 'cross-referenced' and repo not in event['source']['issue']['html_url']:
                 cross_referenced_issue.append(id)
-                print(cross_referenced_issue)
                 print(event['source']['issue']['html_url'])
-                return
+                
 
-
-    print(cross_referenced_issue)
+    if len(cross_referenced_issue) == 0:
+        print('No cross referenced pr issue found for repo: ', repo)  
+    else:          
+        print(cross_referenced_issue)
 
     return 
 
@@ -37,13 +38,13 @@ if __name__ == "__main__":
 
     # query issue/pr timeline
     # events = api.get_issue_pr_timeline("jquery/jquery", 4406)
-
+    repo = input("Enter repo: ")
     res = api.repo_issues("nodejs/node")
     # for pr in res:
     #     print(pr)
     pr_ids = [pr['number'] for pr in res]
     # print(pr_ids)
-    mine_cross_reference_issues(pr_ids)
+    mine_cross_reference_pr_issues(pr_ids)
     # get_source_of_cross_reference("nodejs/node", 33773)
 
     #query repo
