@@ -2,6 +2,8 @@ from github_api import GitHubAPI
 from multiprocessing import Pool
 
 
+repo = input("Enter repo: ")
+
 def mine_cross_reference_pr_issues(repo, pr_ids):
     cross_referenced_issue = []
     for id in pr_ids:
@@ -32,8 +34,6 @@ def getting_single_issue(id):
             print(id, ' ' , event['source']['issue']['html_url'])
             
 
-
-
 def get_source_of_cross_reference(repo, issue_id):
     # 33773 is a cross-reference event
     url = "repos/%s/issues/%s/events" % (repo, issue_id)
@@ -54,15 +54,16 @@ if __name__ == "__main__":
 
     # query issue/pr timeline
     # events = api.get_issue_pr_timeline("jquery/jquery", 4406)
-    repo = input("Enter repo: ")
-    res = api.repo_issues("nodejs/node")
+    
+    res = api.repo_issues(repo)
     # for pr in res:
     #     print(pr)
     pr_ids = [pr['number'] for pr in res]
     # print(pr_ids)
-    mine_cross_reference_pr_issues(repo, pr_ids)
+    mine_cross_reference_pr_issues_parallel(repo, pr_ids)
     # get_source_of_cross_reference("nodejs/node", 33773)
 
     #query repo
     # res = api.get_repo("Jupyter%20Notebook","2008-01-01","2009-01-01")
-    print()
+    
+ 
