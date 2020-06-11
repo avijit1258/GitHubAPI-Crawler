@@ -1,4 +1,5 @@
 from github_api import GitHubAPI
+from multiprocessing import Pool
 
 
 def mine_cross_reference_pr_issues(repo, pr_ids):
@@ -17,6 +18,21 @@ def mine_cross_reference_pr_issues(repo, pr_ids):
         print(cross_referenced_issue)
 
     return 
+
+def mine_cross_reference_pr_issues_parallel(repo, pr_ids):
+
+    pool = Pool()
+    result = pool.map(getting_single_issue, pr_ids)
+    return 
+
+def getting_single_issue(id):
+    issue_events = api.get_issue_pr_timeline(repo, id)
+    for event in issue_events:
+        if event['event'] == 'cross-referenced' and repo not in event['source']['issue']['html_url']:
+            print(id, ' ' , event['source']['issue']['html_url'])
+            
+
+
 
 def get_source_of_cross_reference(repo, issue_id):
     # 33773 is a cross-reference event
