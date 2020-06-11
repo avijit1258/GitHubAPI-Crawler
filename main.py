@@ -1,8 +1,10 @@
 from github_api import GitHubAPI
 from multiprocessing import Pool
+import random
 
 
-repo = input("Enter repo: ")
+repo = 'hello world'
+
 
 def mine_cross_reference_pr_issues(repo, pr_ids):
     cross_referenced_issue = []
@@ -54,13 +56,20 @@ if __name__ == "__main__":
 
     # query issue/pr timeline
     # events = api.get_issue_pr_timeline("jquery/jquery", 4406)
-    
-    res = api.repo_issues(repo)
-    # for pr in res:
-    #     print(pr)
-    pr_ids = [pr['number'] for pr in res]
-    # print(pr_ids)
-    mine_cross_reference_pr_issues_parallel(repo, pr_ids)
+
+    with open('data/repoList_morethan200PR.txt') as f:
+        repos = [line.rstrip() for line in f]
+    repos = random.sample(repos, 10)
+
+    for r in repos:
+        repo = r
+        print('Under investigation : ', repo)
+        res = api.repo_issues(repo)
+        # for pr in res:
+        #     print(pr)
+        pr_ids = [pr['number'] for pr in res]
+        # print(pr_ids)
+        mine_cross_reference_pr_issues_parallel(repo, pr_ids)
     # get_source_of_cross_reference("nodejs/node", 33773)
 
     #query repo
