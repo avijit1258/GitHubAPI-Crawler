@@ -44,7 +44,7 @@ if __name__ == "__main__":
     #     print(pr)
     pr_ids = [pr['number'] for pr in res]
     # print(pr_ids)
-    mine_cross_reference_pr_issues(pr_ids)
+    mine_cross_reference_pr_issues(repo, pr_ids)
     # get_source_of_cross_reference("nodejs/node", 33773)
 
     #query repo
