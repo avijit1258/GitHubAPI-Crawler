@@ -32,7 +32,7 @@ def getting_single_issue(id):
     issue_events = api.get_issue_pr_timeline(repo, id)
     for event in issue_events:
         if event['event'] == 'cross-referenced' and repo not in event['source']['issue']['html_url']:
-            print(repo, ', ', id, ', ' , event['source']['issue']['html_url'])
+            print('https://github.com/', repo, '/issues/', id, ' , ' , event['source']['issue']['html_url'], sep='')
     return
 
 def get_source_of_cross_reference(repo, issue_id):
@@ -56,8 +56,8 @@ if __name__ == "__main__":
 
     with open('data/repoList_morethan200PR.txt') as f:
         repos = [line.rstrip() for line in f]
-    repos = random.sample(repos, 2)
-
+    repos = random.sample(repos, 10)
+    print(repos)
     for r in repos:
         repo = r
         
