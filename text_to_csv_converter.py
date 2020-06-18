@@ -1,3 +1,4 @@
+import csv
 
 def reading_a_text_file(filename):
     ''' This function reads a text file and outputs list of lines where line contents are
@@ -15,14 +16,14 @@ def reading_a_text_file(filename):
             continue
         else:
             count = count + 1
-            contents = line.split(',')
+            contents = line.strip().split(',')
             list_of_lines.append([count] + contents)
 
     return list_of_lines
 
 def list_of_lines_to_csv(list_of_lines):
     with open('cross_reference.csv', 'w', newline='') as csvfile:
-        csvwriter = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        csvwriter = csv.writer(csvfile, delimiter=',')
         csvwriter.writerow(['ID', 'Src Issue', 'Ref Issue/PR'])
         for i in list_of_lines:
             csvwriter.writerow(i)
