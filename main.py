@@ -39,7 +39,21 @@ def getting_single_issue(id):
             print('https://github.com/', repo, '/issues/', id, ' , ', type_repo1 , ' , ' , event['source']['issue']['html_url'], ',', type_repo2, sep='')
     return
 
+def is_cross_repo_renamed(repo1, repo2):
+    ''' check cross referenced repo for renamed '''
+    repo1_url = repo1.split('/')[3] + '/' + repo1.split('/')[4]
+    repo2_url = repo2.split('/')[3] + '/' + repo2.split('/')[4]
+
+    url = "repos/%s" % (repo2_url)
+    repoInfo = api.request(url)
+
+    if repoInfo['full_name'] == repo1_url:
+        return True 
+    return False
+
 def is_from_same_organization(repo1, repo2):
+
+    ''' This function checks whether two repo belongs to same account '''
 
     # print(repo1.split('/'))
     if repo1.split('/')[3] == repo2.split('/')[3]:
