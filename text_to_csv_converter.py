@@ -24,7 +24,7 @@ def reading_a_text_file(filename):
 def list_of_lines_to_csv(list_of_lines):
     with open('cross_reference.csv', 'w', newline='') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=',')
-        csvwriter.writerow(['ID', 'Src Issue', 'Ref Issue/PR'])
+        csvwriter.writerow(['ID', 'Src Issue', 'Type', 'Ref Issue/PR', 'Type'])
         for i in list_of_lines:
             csvwriter.writerow(i)
 
