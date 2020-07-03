@@ -41,13 +41,13 @@ def getting_single_issue(id):
 
 def is_cross_repo_renamed(repo1, repo2):
     ''' check cross referenced repo for renamed '''
-    repo1_url = repo1.split('/')[3] + '/' + repo1.split('/')[4]
+    # repo1_url = repo1.split('/')[3] + '/' + repo1.split('/')[4]
     repo2_url = repo2.split('/')[3] + '/' + repo2.split('/')[4]
 
     url = "repos/%s" % (repo2_url)
     repoInfo = api.request(url)
 
-    if repoInfo['full_name'] == repo1_url:
+    if repoInfo['full_name'] == repo1:
         return True 
     return False
 
@@ -56,9 +56,14 @@ def is_from_same_organization(repo1, repo2):
     ''' This function checks whether two repo belongs to same account '''
 
     # print(repo1.split('/'))
-    if repo1.split('/')[3] == repo2.split('/')[3]:
-        # print('True')
-        return True
+
+    try:
+        if repo1.split('/')[0] == repo2.split('/')[3]:
+            # print('True')
+            return True
+    except IndexError:
+        print('403 index error for split', repo1, ' , ', repo2)
+        return False
 
     return False
 
