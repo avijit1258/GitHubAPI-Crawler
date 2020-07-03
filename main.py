@@ -93,7 +93,7 @@ if __name__ == "__main__":
         repos = [line.rstrip() for line in f]
     repos = random.sample(repos, 10)
     repos.append('nodejs/node')
-    print(repos)
+    print('403 ', repos)
     for r in repos:
         repo = r
         
