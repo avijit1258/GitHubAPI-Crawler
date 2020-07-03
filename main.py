@@ -33,7 +33,7 @@ def getting_single_issue(id):
     type_repo2 = 'ISSUE'
     issue_events = api.get_issue_pr_timeline(repo, id)
     for event in issue_events:
-        if event['event'] == 'cross-referenced' and repo not in event['source']['issue']['html_url'] and is_from_same_organization(repo, event['source']['issue']['html_url']):
+        if event['event'] == 'cross-referenced' and repo not in event['source']['issue']['html_url'] and is_from_same_organization(repo, event['source']['issue']['html_url']) and not is_cross_repo_renamed(repo, event['source']['issue']['html_url']):
             type_repo1 = 'ISSUE' if 'issues' in repo else 'PR'
             type_repo2 = 'ISSUE' if 'issues' in event['source']['issue']['html_url'] else 'PR'
             print('https://github.com/', repo, '/issues/', id, ' , ', type_repo1 , ' , ' , event['source']['issue']['html_url'], ',', type_repo2, sep='')
@@ -48,6 +48,7 @@ def is_cross_repo_renamed(repo1, repo2):
     repoInfo = api.request(url)
 
     if repoInfo['full_name'] == repo1:
+        print('403 From renamed function Repo 1', repo1, 'Repo 2', repo2)
         return True 
     return False
 
