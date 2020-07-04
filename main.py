@@ -41,13 +41,13 @@ def getting_single_issue(id):
 
 def is_cross_repo_renamed(repo1, repo2):
     ''' check cross referenced repo for renamed '''
-    # repo1_url = repo1.split('/')[3] + '/' + repo1.split('/')[4]
     repo2_url = repo2.split('/')[3] + '/' + repo2.split('/')[4]
+    # repo1_url = repo1.split('/')[0] + '/' + repo1.split('/')[1]
 
-    url = "repos/%s" % (repo2_url)
+    url = "repos/%s" % (repo1)
     repoInfo = api.request(url)
 
-    if repoInfo['full_name'] == repo1:
+    if repoInfo['full_name'] == repo2_url:
         print('403 From renamed function Repo 1', repo1, 'Repo 2', repo2)
         return True 
     return False
@@ -91,8 +91,9 @@ if __name__ == "__main__":
 
     with open('data/repoList_morethan200PR.txt') as f:
         repos = [line.rstrip() for line in f]
-    repos = random.sample(repos, 10)
-    repos.append('nodejs/node')
+    # repos = ['loopj/android-async-http', 'Smoothieware/Smoothieware', 'mongodb/node-mongodb-native', 'python/cpython', 'triketora/women-in-software-eng', 'd3/d3', 'RestKit/RestKit', 'Atom/atom', 'D-Programming-Language/dub', 'mjmlio/mjml', 'nodejs/node']
+    repos = random.sample(repos, 20)
+    # repos.append('nodejs/node')
     print('403 ', repos)
     for r in repos:
         repo = r
@@ -106,6 +107,7 @@ if __name__ == "__main__":
         
     # get_source_of_cross_reference("nodejs/node", 33773)
 
+    # is_cross_repo_renamed('excilys/androidannotations' , 'https://github.com/androidannotations/androidannotations/issues/2227')
     #query repo
     # res = api.get_repo("Jupyter%20Notebook","2008-01-01","2009-01-01")
     
