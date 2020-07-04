@@ -222,7 +222,7 @@ class GitHubAPI(object):
                     # repository is empty https://developer.github.com/v3/git/
                     return {}
                 elif r.status_code == 401:
-                    print("401,Bad credentials, please remove this token")
+                    print("401,Bad credentials, please remove this token, ", token)
                     continue
                 elif r.status_code == 403:
                     # repository is empty https://developer.github.com/v3/git/
