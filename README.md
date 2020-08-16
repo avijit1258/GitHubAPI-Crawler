@@ -24,7 +24,7 @@ main.py
     ```
 
 2. All the issues of a repo is retrieved.
-3. issue_pr_timeline for all the issues retrieved in step-1 are considered to find cross-reference pull request from same organization
+3. issue_pr_timeline for all the issues retrieved in step-2 are considered to find cross-reference pull request from same organization
 4. All the candidate cross-reference pull request events are printed in a text file.
 
 text_to_csv_converter.py
