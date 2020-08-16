@@ -6,29 +6,37 @@ import random
 repo = 'hello world'
 
 
-def mine_cross_reference_pr_issues(repo, pr_ids):
-    cross_referenced_issue = []
-    for id in pr_ids:
-        issue_events = api.get_issue_pr_timeline(repo, id)
-        for event in issue_events:
-            if event['event'] == 'cross-referenced' and repo not in event['source']['issue']['html_url']:
-                cross_referenced_issue.append(id)
-                print(event['source']['issue']['html_url'])
+# def mine_cross_reference_pr_issues(repo, pr_ids):
+#     cross_referenced_issue = []
+#     for id in pr_ids:
+#         issue_events = api.get_issue_pr_timeline(repo, id)
+#         for event in issue_events:
+#             if event['event'] == 'cross-referenced' and repo not in event['source']['issue']['html_url']:
+#                 cross_referenced_issue.append(id)
+#                 print(event['source']['issue']['html_url'])
                 
 
-    if len(cross_referenced_issue) == 0:
-        print('No cross referenced pr issue found for repo: ', repo)  
-    else:          
-        print(cross_referenced_issue)
+#     if len(cross_referenced_issue) == 0:
+#         print('No cross referenced pr issue found for repo: ', repo)  
+#     else:          
+#         print(cross_referenced_issue)
 
-    return 
+#     return 
 
 def mine_cross_reference_pr_issues_parallel(repo, pr_ids):
+    ''' 
+        Input: This function takes a repository and its issues as input
+        Purpose: Using python parallel pool (to make the process faster), each individual issues issue_pr_timelines are analyzed to find cross-reference pull requests. 
+    '''
     pool = Pool()
-    result = pool.map(getting_single_issue, pr_ids)
+    result = pool.map(getting_issue_pr_timeline_of_a_issue, pr_ids)
     return 
 
-def getting_single_issue(id):
+def getting_issue_pr_timeline_of_a_issue(id):
+    '''
+        Input: takes an issue id
+        Output: this method iterates all events in issue_pr_timeline to get the cross_referenced pull request which points to repositories of same organization.
+    '''
     type_repo1 = 'ISSUE'
     type_repo2 = 'ISSUE'
     issue_events = api.get_issue_pr_timeline(repo, id)
@@ -54,7 +62,7 @@ def is_cross_repo_renamed(repo1, repo2):
 
 def is_from_same_organization(repo1, repo2):
 
-    ''' This function checks whether two repo belongs to same account '''
+    ''' This function checks whether two repo belongs to same organization  '''
 
     # print(repo1.split('/'))
 
@@ -89,7 +97,7 @@ if __name__ == "__main__":
 
     # is_from_same_organization('https://github.com/facebook/react/issues/14981', 'https://github.com/facebook/redux-toolkit/issues/331')
 
-    with open('data/repoList_morethan200PR.txt') as f:
+    with open('data/repoList_python.txt') as f:
         repos = [line.rstrip() for line in f]
     # repos = ['loopj/android-async-http', 'Smoothieware/Smoothieware', 'mongodb/node-mongodb-native', 'python/cpython', 'triketora/women-in-software-eng', 'd3/d3', 'RestKit/RestKit', 'Atom/atom', 'D-Programming-Language/dub', 'mjmlio/mjml', 'nodejs/node']
     repos = random.sample(repos, 20)
