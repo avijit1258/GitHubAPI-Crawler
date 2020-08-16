@@ -15,7 +15,7 @@ def reading_a_text_file(filename):
     list_of_lines = []
     count = 0
     for line in issues:
-        if '403' in line:
+        if '40' in line:
             continue
         else:
             count = count + 1
