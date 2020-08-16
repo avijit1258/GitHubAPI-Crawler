@@ -61,10 +61,7 @@ def is_cross_repo_renamed(repo1, repo2):
     return False
 
 def is_from_same_organization(repo1, repo2):
-
     ''' This function checks whether two repo belongs to same organization  '''
-
-    # print(repo1.split('/'))
 
     try:
         if repo1.split('/')[0] == repo2.split('/')[3]:
