@@ -12,4 +12,15 @@ You could have multiple email accounts (--> multiple GitHub accounts) --> make a
 ## How to contribute
 Create a fork, make changes in your fork, and once finish the implementation, submit a PR.
 
+## Scale in fork
+
+main.py
+1. All the issues of a repo is retrieved.
+2. issue_pr_timeline for all the issues retrieved in step-1 are considered to find cross-reference pull request from same organization
+3. All the candidate cross-reference pull request events are printed in a text file.
+
+text_to_csv_converter.py
+1. Name of the text file generated from previous step is used as command line argument, which is then converted to a well-formatted csv file. 
+
+
 
