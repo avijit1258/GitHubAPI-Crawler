@@ -17,9 +17,11 @@ Create a fork, make changes in your fork, and once finish the implementation, su
 main.py
 1. A file containing repo names are taken as input. For example,
 
-    `caskroom/homebrew-cask
+    ```
+    caskroom/homebrew-cask
     kubernetes/kubernetes
-    mozilla-b2g/gaia`
+    mozilla-b2g/gaia
+    ```
 
 2. All the issues of a repo is retrieved.
 3. issue_pr_timeline for all the issues retrieved in step-1 are considered to find cross-reference pull request from same organization
